@@ -17,5 +17,7 @@ public class CydeoApp {
 
         CommentService commentService = context.getBean(CommentService.class);
         commentService.publishComment(comment);
+
+
     }
 }
