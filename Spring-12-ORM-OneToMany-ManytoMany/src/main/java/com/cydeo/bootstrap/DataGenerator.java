@@ -1,31 +1,33 @@
 package com.cydeo.bootstrap;
 
-import com.cydeo.entity.Customer;
-import com.cydeo.entity.Merchant;
-import com.cydeo.entity.Payment;
-import com.cydeo.entity.PaymentDetail;
+import com.cydeo.entity.*;
 import com.cydeo.enums.Status;
-import com.cydeo.repository.CustomerRepository;
-import com.cydeo.repository.MerchantRepository;
-import com.cydeo.repository.PaymentDetailRepository;
-import com.cydeo.repository.PaymentRepository;
+import com.cydeo.repository.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Arrays;
+
 @Component
 public class DataGenerator implements CommandLineRunner {
     private PaymentRepository paymentRepository;
     private PaymentDetailRepository paymentDetailRepository;
     private MerchantRepository merchantRepository;
     private CustomerRepository customerRepository;
+    private CartRepository cartRepository;
+    private ItemRepository itemRepository;
 
-    public DataGenerator(PaymentRepository paymentRepository, PaymentDetailRepository paymentDetailRepository, MerchantRepository merchantRepository, CustomerRepository customerRepository) {
+
+    public DataGenerator(PaymentRepository paymentRepository, PaymentDetailRepository paymentDetailRepository, MerchantRepository merchantRepository, CustomerRepository customerRepository, ItemRepository itemRepository, CartRepository cartRepository) {
         this.paymentRepository = paymentRepository;
         this.paymentDetailRepository = paymentDetailRepository;
         this.merchantRepository = merchantRepository;
         this.customerRepository = customerRepository;
+        this.cartRepository = cartRepository;
+        this.itemRepository = itemRepository;
+
     }
 
     @Override
@@ -43,15 +45,35 @@ public class DataGenerator implements CommandLineRunner {
 
         Merchant merchant1 = new Merchant("AmazonSubMerchant","M123",new BigDecimal("0.25"),new BigDecimal("3.25"),5);
         Customer customer1 = new Customer("msmith","Mike","Smith","msmith@cydeo.com","VA");
-        payment1.setCustomer(customer1);
-        payment2.setCustomer(customer1);
+
 
         payment1.setMerchant(merchant1);
         payment2.setMerchant(merchant1);
-
-
-
         customerRepository.save(customer1);
+
+        payment1.setCustomer(customer1);
+        payment2.setCustomer(customer1);
+
+        Item item1= new Item("Milk", "12L");
+        Item item2= new Item("Kiredosar", "15K");
+        Item item3= new Item("Kiresesar", "234K");
+        Cart cart1= new Cart();
+        Cart cart2= new Cart();
+
+        cart1.setItemList(Arrays.asList(item1,item2,item3));
+        cart2.setItemList(Arrays.asList(item1,item2));
+
+        itemRepository.save(item1);
+        itemRepository.save(item2);
+        itemRepository.save(item3);
+        cartRepository.save(cart1);
+        cartRepository.save(cart2);
+
+
+
+
+
+
         merchantRepository.save(merchant1);
         paymentRepository.save(payment1);
         paymentRepository.save(payment2);
