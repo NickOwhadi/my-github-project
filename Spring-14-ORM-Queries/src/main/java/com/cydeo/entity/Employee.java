@@ -21,9 +21,10 @@ public class Employee extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private Gender gender;
     private Integer salary;
-
+    @ManyToOne
+    @JoinColumn(name="department")
     private Department department;
-
+    @ManyToOne
     private Region region;
 
     public Employee(String firstName, String lastName, String email, LocalDate hireDate, Gender gender, Integer salary) {
