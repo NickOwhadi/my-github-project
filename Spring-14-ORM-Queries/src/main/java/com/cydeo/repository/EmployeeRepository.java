@@ -50,4 +50,12 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
 
 
+    @Query(value = "select * FROM employees where salary ?1", nativeQuery = true)
+    List<Employee> getEmployeeDetailsBySalary(int salary);
+
+
+
+
+
+
 }
