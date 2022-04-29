@@ -32,6 +32,19 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     @Query("SELECT e from Employee e WHERE e.email=?1 and e.salary=?2")
     Optional<Employee> getEmployeeDetail(String email, int salary );
 
+    @Query("SELECT e FROM Employee e WHERE e.salary <> ?1")
+    List<Employee> getSalaryNot(int salary);
+
+    @Query("SELECT e FROM Employee e WHERE e.salary BETWEEN ?1 and ?2")
+    List<Employee> getSalaryBetween(int salary1, int salry2);
+
+
+    @Query("SELECT e FROM Employee e WHERE e.email is null")
+    Optional<Employee> getEmployeeWithNullEmail();
+
+    @Query("SELECT e FROM Employee e WHERE e.email is NOT null")
+    List<Employee> getEmployeeWithNotNullEmail();
+
 
 
 
